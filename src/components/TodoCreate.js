@@ -77,7 +77,6 @@ export default function TodoCreate() {
         setOpen(!open)
     }
 
-
     return (
         <>
         {open && <InsertFormPositioner><InsertForm><Input placeholder="입력후 enter" autoFocus/></InsertForm></InsertFormPositioner>}

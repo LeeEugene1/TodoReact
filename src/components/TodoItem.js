@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components';
 import {MdDone, MdDelete} from 'react-icons/md';
+import { useTodoDispatch } from './todoContext';
 
 const Remove = styled.div`
     opacity:0;
@@ -48,16 +49,36 @@ const TodoItemBlock = styled.div`
     }
 `;
 
-export default function TodoItem({id,done,text}) {
+function Object({props, done}){
+    return(
+        <>
+            <CheckCircle done={props.done}>
+                {props.done && <MdDone/>}
+            </CheckCircle>
+            <Text done={props.done}>
+                <p>{props.text}</p>
+            </Text>
+            <Remove><MdDelete/></Remove>
+        </>
+    );
+}
+
+export default function TodoItem({_things}) {
+
     return (
         <TodoItemBlock>
-            <CheckCircle done={done}>
+            {/* <CheckCircle done={done}>
                 {done && <MdDone/>}
             </CheckCircle>
             <Text done={done}>{text}</Text>
                 <Remove>
                     <MdDelete/>
-                </Remove>
+                </Remove> */}
+
+                {/* <Object props={_things[0]} /> */}
+                {_things.map(test => 
+                    <Object props={test} 
+                />)}
         </TodoItemBlock>
     )
 }
