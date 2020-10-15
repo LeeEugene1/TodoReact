@@ -72,17 +72,24 @@ const Input = styled.input`
 `;
 
 export default function TodoCreate() {
+    const [inputs, setInputs] = useState('');
     const [open, setOpen] = useState(false);
     const onToggle = () => {
         setOpen(!open)
     }
 
+    const onChange = (e) =>{
+        // console.log(e.target.value)
+        setInputs(e.target.value);
+    }
+
     return (
         <>
-        {open && <InsertFormPositioner><InsertForm><Input placeholder="입력후 enter" autoFocus/></InsertForm></InsertFormPositioner>}
-        <CircleButton onClick={onToggle} open={open}>
-            <MdAdd/>
-        </CircleButton>
+            {inputs}
+            {open && <InsertFormPositioner><InsertForm><Input placeholder="입력후 enter" autoFocus onChange={onChange}/></InsertForm></InsertFormPositioner>}
+            <CircleButton onClick={onToggle} open={open}>
+                <MdAdd/>
+            </CircleButton>
         </>
     )
 }
