@@ -2,6 +2,7 @@
 import React,{useState} from 'react'
 import styled,{css} from 'styled-components'
 import {MdAdd} from 'react-icons/md'
+import TodoItem from './TodoItem';
 
 const CircleButton = styled.button`
     background:#38d9a9;
@@ -71,23 +72,21 @@ const Input = styled.input`
  box-sizing:border-box;
 `;
 
-export default function TodoCreate() {
-    const [inputs, setInputs] = useState('');
-    const [open, setOpen] = useState(false);
-    const onToggle = () => {
-        setOpen(!open)
-    }
+export default function TodoCreate({onChange, onCreate, text}) {
+    const open = true;
 
-    const onChange = (e) =>{
-        // console.log(e.target.value)
-        setInputs(e.target.value);
-    }
 
     return (
         <>
-            {inputs}
-            {open && <InsertFormPositioner><InsertForm><Input placeholder="입력후 enter" autoFocus onChange={onChange}/></InsertForm></InsertFormPositioner>}
-            <CircleButton onClick={onToggle} open={open}>
+                <Input name="text" onChange={onChange} value={text} placeholder="입력후 버튼클릭" autoFocus />
+                {/* <input name="text" onChange={onChange} placeholder="입력후 버튼클릭" autoFocus /> */}
+                <button onClick={onCreate}>입력</button>
+            {open && 
+                <InsertFormPositioner>
+                <InsertForm>
+                <Input name="text" onChange={onChange} placeholder="안됨" autoFocus />
+            <button onClick={onCreate}>여기가안되는데 이유를모르겟네</button></InsertForm></InsertFormPositioner>}
+            <CircleButton>
                 <MdAdd/>
             </CircleButton>
         </>

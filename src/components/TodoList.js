@@ -1,8 +1,9 @@
-import React,{useState, useRef} from 'react'
+import React,{useState} from 'react'
 import styled,{css} from 'styled-components'
 // import { useTodoState } from './todoContext';
 import TodoItem from './TodoItem';
 import {MdAdd} from 'react-icons/md'
+import TodoCreate from './TodoCreate'
 
 const TodoListBlock = styled.div`
     flex:1;
@@ -81,10 +82,8 @@ const Input = styled.input`
 
 export default function TodoList() {
     const [inputs, setInputs] = useState({
-        text:'',
-        done:false
+        text:''
     });
-
 
     const {text, done} = inputs
     const onChange = (e) =>{
@@ -93,38 +92,44 @@ export default function TodoList() {
             [e.target.name]:e.target.value
         })
     }
-    
+
     const [_things, set_things] = useState([
         {
-            id:1,
+            // id:1,
             text:'todoApp',
             done:true
         },
         {
-            id:2,
+            // id:2,
             text:'wash face',
             done:false
         }
     ]);
 
-    const OnCreate = () =>{
-        const nextId = useRef(3)
+    const onCreate = () =>{
+        // const nextId = useRef(3)
         const newThing = {
-            id:nextId.current,
+            // id:nextId.current,
             text,
             done
         }
         set_things(_things.concat(newThing))
         setInputs({
             text:'',
-            done:false
         })
-        nextId.current += 1
+        // nextId.current += 1
     }
+
+    const onRemove = (text) =>{
+        set_things(_things.filter(test => test.text !== text));
+    };
 
     return(
         <>
         <TodoListBlock>
+        <TodoCreate onChange={onChange} onCreate={onCreate} text={text}>
+        </TodoCreate>
+
             {/* {todos.map(todo => (
                 <TodoItem
                     key={todo.id}
@@ -133,20 +138,17 @@ export default function TodoList() {
                     done={todo.done}
                 />
             ))} */}
-            <TodoItem _things={_things}/>
+            
             {/* <TodoItem text="프로젝트생성하기" done={true}/>
             <TodoItem text="컴포넌트 생성하기" done={false}/> */}
-
+            <TodoItem _things={_things} onRemove={onRemove}>
+            </TodoItem>
         </TodoListBlock>
-            <InsertFormPositioner>
-                <InsertForm>
-                    <Input placeholder="입력" autoFocus onChange={onChange}/>
-                    <button onClick={OnCreate}>입력</button>
-                </InsertForm>
-            </InsertFormPositioner>
-            <CircleButton>
-                <MdAdd/>
-            </CircleButton>
+        {/* <InsertFormPositioner>
+            <InsertForm>
+            </InsertForm>
+            </InsertFormPositioner> */}
+
         </>
     ) 
 }

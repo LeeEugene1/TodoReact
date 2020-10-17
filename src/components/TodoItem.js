@@ -49,7 +49,7 @@ const TodoItemBlock = styled.div`
     }
 `;
 
-function Object({props, done}){
+function Object({props, done, onRemove}){
     return(
         <>
             <CheckCircle done={props.done}>
@@ -58,12 +58,14 @@ function Object({props, done}){
             <Text done={props.done}>
                 <p>{props.text}</p>
             </Text>
-            <Remove><MdDelete/></Remove>
+            <Remove>
+                <MdDelete onClick={() => onRemove(props.text)}/>
+            </Remove>
         </>
     );
 }
 
-export default function TodoItem({_things}) {
+export default function TodoItem({_things, onRemove}) {
 
     return (
         <TodoItemBlock>
@@ -77,8 +79,9 @@ export default function TodoItem({_things}) {
 
                 {/* <Object props={_things[0]} /> */}
                 {_things.map(test => 
-                    <Object props={test} 
-                />)}
+                    <Object props={test} onRemove={onRemove} />
+                )}
+
         </TodoItemBlock>
     )
 }
